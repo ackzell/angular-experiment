@@ -1,0 +1,13 @@
+<main>
+  <h1>Angular Experiment: Todos</h1>
+
+  <div class="app-contents">
+    <section class="app-components">
+      <todo-form (submissionEvent)="addTodo($event)" />
+      <todo-list [todos]="todos()" (remove)="removeTodo($event)" />
+    </section>
+    <section>
+      <todo-debug [todos]="todos()" />
+    </section>
+  </div>
+</main>

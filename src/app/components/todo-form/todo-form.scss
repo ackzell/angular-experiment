@@ -1,0 +1,39 @@
+.todo-form {
+  form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  input[type='text'] {
+    border: 2px solid brown;
+    border-radius: 0.33rem;
+    padding: 0.25rem;
+    font-size: 1.5rem;
+    color: brown;
+    outline: none;
+    transition: border 0.2s ease-in-out;
+
+    &:focus {
+      border-color: tomato;
+    }
+  }
+
+  button {
+    background-color: brown;
+    padding: 0.75rem;
+    color: snow;
+    font-size: large;
+    border: none;
+    border-radius: 0.33rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: tomato;
+    }
+
+    &:focus {
+      outline: 3px solid tomato;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+.todo-item {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: large;
+  padding: 0.25rem;
+  justify-content: space-between;
+
+  --form-control-color: brown;
+}
+
+.todo-title {
+  width: 100%;
+  max-width: 80%;
+}
+
+.todo-text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: brown;
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+
+  font: inherit;
+  color: brown;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid brown;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+// some styles from: https://moderncss.dev/pure-css-custom-checkbox-style/
+input[type='checkbox']::before {
+  content: '';
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
+}
+
+input[type='checkbox']:focus {
+  outline: max(2px, 0.15em) solid tomato;
+  outline-offset: max(2px, 0.15em);
+}
+
+input[type='checkbox']:disabled {
+  --form-control-color: var(--form-control-disabled);
+
+  color: var(--form-control-disabled);
+  cursor: not-allowed;
+}
+
+button {
+  background: transparent;
+  border: solid brown;
+  border-radius: 99rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  color: brown;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+
+  &:hover {
+    background-color: brown;
+    color: snow;
+  }
+}

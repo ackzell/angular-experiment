@@ -1,0 +1,18 @@
+h1 {
+  padding: 2rem;
+  color: tomato;
+}
+
+.app-contents {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  flex-wrap: wrap;
+  background-color: bisque;
+}
+
+.app-components {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

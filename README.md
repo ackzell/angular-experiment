@@ -1,3 +1,10 @@
+
+<img width="1259" height="820" alt="Screenshot 2025-08-17 at 5 26 17 p m" src="https://github.com/user-attachments/assets/4a0f838f-40be-486f-a46b-32745ccead8d" />
+
+Todo app in Angular 20
+
+#Original readme:
+
 # AngularExperiment
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.

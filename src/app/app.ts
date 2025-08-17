@@ -10,21 +10,26 @@ For a comparison of the two approaches, see Choosing an approach
 The following example is a template-driven form app:
 */
 
+import { JsonPipe } from '@angular/common';
 import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+type TodoId = ReturnType<typeof crypto.randomUUID>;
+
 export interface Todo {
-  id: ReturnType<typeof crypto.randomUUID>;
+  id: TodoId;
   title: string;
   completed: boolean;
 }
 
 @Component({
   selector: 'todo-item',
+  imports: [FormsModule],
   template: `
     <div class="todo-item">
-      <input type="checkbox" [checked]="todo().completed" />
+      <input type="checkbox" [(ngModel)]="todo().completed" />
       <span>{{ todo().title }}</span>
+      <button (click)="removeTodo(todo().id)">X</button>
     </div>
   `
 })
@@ -36,22 +41,31 @@ export class TodoItem {
     title: ''
   });
 
+  remove = output<TodoId>();
+
+  removeTodo(id: TodoId) {
+    this.remove.emit(id);
+  }
 }
 
 @Component({
   selector: 'todo-list',
   imports: [TodoItem],
   template: `
-    Hello from todo-list
     <div class="todo-list">
       @for (todo of todos(); track todo.id) {
-        <todo-item [todo]="todo"></todo-item>
+        <todo-item [todo]="todo" (remove)="removeTodo($event)"></todo-item>
       }
     </div>
   `
 })
 export class TodoList {
-  todos = input<Todo[]>([]);
+  todos = input<Todo[]>();
+  remove = output<TodoId>();
+
+  removeTodo(id: TodoId) {
+    this.remove.emit(id);
+  }
 }
 
 @Component({
@@ -82,13 +96,28 @@ export class TodoForm {
   }
 }
 
+
+@Component({
+  selector: 'todo-debug',
+  imports: [JsonPipe],
+  template: `
+    <div class="todo-debug">
+      <pre>{{ todos() | json }}</pre>
+    </div>
+  `
+})
+export class TodoDebug {
+  todos = input<Todo[]>();
+}
+
 @Component({ // <- everything inside the decorator is "component metadata"
   selector: 'app-root',
   // Components are standalone now, no more NGModules required in the app
-  imports: [TodoForm, TodoList], // <- components, directives and services go here.
+  imports: [TodoForm, TodoList, TodoDebug], // <- components, directives and services go here.
   template: `
-  <todo-form (submissionEvent)="addTodo($event)"></todo-form>
-    <todo-list [todos]="todos()"></todo-list>
+    <todo-form (submissionEvent)="addTodo($event)" />
+    <todo-list [todos]="todos()" (remove)="removeTodo($event)" />
+    <todo-debug [todos]="todos()"/>
   `,
   styleUrl: './app.scss' // <- styles are scoped by default
 })
@@ -101,7 +130,14 @@ export class App {
   ]);
 
   addTodo(title: string) {
+    if (title.trim() === '') {
+      return;
+    }
     console.log('[App addTodo]: it arrived as: ', title);
     this.todos.update(todos => [...todos, { id: crypto.randomUUID(), title, completed: false }]);
+  }
+
+  removeTodo(id: TodoId) {
+    this.todos.update(todos => todos.filter(todo => todo.id !== id));
   }
 }

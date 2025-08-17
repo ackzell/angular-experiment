@@ -1,3 +1,6 @@
 {
-    "workbench.colorTheme": "Default Dark Modern"
+    "workbench.colorTheme": "Default Dark Modern",
+    "editor.fontSize": 16,
+    "editor.fontFamily": "Monaco",
+    "editor.fontLigatures": true
 }
